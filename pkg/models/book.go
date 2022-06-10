@@ -7,6 +7,7 @@ import (
 
 var db *gorm.DB
 
+// Book is the model for each Book to be stored in the databse
 type Book struct {
 	gorm.Model
 	Name        string `gorm:"" json:"name"`
@@ -14,6 +15,7 @@ type Book struct {
 	Publication string `json:"publication"`
 }
 
+// init initializes the database
 func init() {
 	config.Connect()
 	db = config.GetDB()
