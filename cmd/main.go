@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -17,5 +18,6 @@ func main() {
 
 	routes.RegisterBookStoreRoutes(r)
 	http.Handle("/", r)
+	fmt.Println("Server is up and running...")
 	log.Fatal(http.ListenAndServe(PORT, r))
 }
