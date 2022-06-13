@@ -21,3 +21,33 @@ func init() {
 	db = config.GetDB()
 	db.AutoMigrate(&Book{})
 }
+
+// CreateBook creates a new book object in the database.
+func (b *Book) CreateBook() *Book {
+	db.NewRecord(b)
+	db.Create(&b)
+	return b
+}
+
+// GetAllBooks retrieves all books stored in the database.
+func GetAllBooks() []Book {
+	var Books []Book
+	db.Find(&Books)
+	return Books
+}
+
+// GetBookById searches for books using their ID.
+func GetBookById(Id int64) (*Book, *gorm.DB) {
+	var getBook Book
+	db := db.Where("ID=?", Id).Find(&getBook)
+
+	return &getBook, db
+}
+
+// DeleteBook deletes book from database.
+func DeleteBook(ID int64) Book {
+	var book Book
+	db.Where("ID=?", ID).Delete(&book)
+
+	return book
+}
