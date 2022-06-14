@@ -12,5 +12,5 @@ func RegisterBookStoreRoutes(router *mux.Router) {
 
 	router.HandleFunc("/books/{bookId}", controllers.GetBookById).Methods("GET")
 	// router.HandleFunc("/books/{bookId}", controllers.UpdateBook).Methods("PUT")
-	// router.HandleFunc("/books/{bookId}", controllers.DeleteBook).Methods("DELETE")
+	router.HandleFunc("/books/{bookId}", controllers.DeleteBook).Methods("DELETE")
 }

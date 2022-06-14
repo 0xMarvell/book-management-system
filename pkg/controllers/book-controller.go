@@ -62,3 +62,23 @@ func CreateBook(w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 
 }
+
+// DeleteBook deletes a book (based on the book Id) from the database.
+func DeleteBook(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	bookId := vars["bookId"]
+	Id, err1 := strconv.ParseInt(bookId, 0, 0)
+	if err1 != nil {
+		fmt.Println("error while parsing")
+	}
+
+	bookDetails := models.DeleteBook(Id)
+	res, err := json.Marshal(bookDetails)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(res)
+}
