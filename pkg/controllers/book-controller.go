@@ -8,6 +8,7 @@ import (
 	"strconv"
 
 	"github.com/Marvellous-Chimaraoke/book-management-system/pkg/models"
+	"github.com/Marvellous-Chimaraoke/book-management-system/pkg/utils"
 	"github.com/gorilla/mux"
 )
 
@@ -44,4 +45,20 @@ func GetBookById(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
+}
+
+// CreateBook creates a new book and saves it in the database.
+func CreateBook(w http.ResponseWriter, r *http.Request) {
+	book := &models.Book{}
+	utils.ParseBody(r, book)
+	b := book.CreateBook()
+
+	res, err := json.Marshal(b)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	w.Write(res)
+
 }
