@@ -24,19 +24,22 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write(res)
+	_, writeErr := w.Write(res)
+	if writeErr != nil {
+		log.Fatal(writeErr)
+	}
 }
 
 // GetBookById retrieves book from databse using its Id.
 func GetBookById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	bookId := vars["bookId"]
-	Id, err1 := strconv.ParseInt(bookId, 0, 0)
+	id, err1 := strconv.ParseInt(bookId, 0, 0)
 	if err1 != nil {
 		fmt.Println("error while parsing")
 	}
 
-	bookDetails, _ := models.GetBookById(Id)
+	bookDetails, _ := models.GetBookById(id)
 	res, err := json.Marshal(bookDetails)
 	if err != nil {
 		log.Fatal(err)
@@ -44,7 +47,10 @@ func GetBookById(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write(res)
+	_, writeErr := w.Write(res)
+	if writeErr != nil {
+		log.Fatal(writeErr)
+	}
 }
 
 // CreateBook creates a new book and saves it in the database.
@@ -59,20 +65,62 @@ func CreateBook(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusCreated)
-	w.Write(res)
+	_, writeErr := w.Write(res)
+	if writeErr != nil {
+		log.Fatal(writeErr)
+	}
+}
 
+// UpdateBook updates the details of books stored in the database.
+func UpdateBook(w http.ResponseWriter, r *http.Request) {
+	updateBook := &models.Book{}
+	utils.ParseBody(r, updateBook)
+
+	vars := mux.Vars(r)
+	bookId := vars["bookId"]
+	id, err1 := strconv.ParseInt(bookId, 0, 0)
+	if err1 != nil {
+		fmt.Println("error while parsing")
+	}
+
+	bookDetails, db := models.GetBookById(id)
+	if updateBook.Name != "" {
+		bookDetails.Name = updateBook.Name
+	}
+	if updateBook.Author != "" {
+		bookDetails.Author = updateBook.Author
+	}
+	if updateBook.Publication != "" {
+		bookDetails.Publication = updateBook.Publication
+	}
+	db.Save(&bookDetails) // save changes to book object
+
+	res, err := json.Marshal(bookDetails)
+	if err != nil {
+		log.Fatal(err)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	jsonEncodeErr := json.NewEncoder(w).Encode("book details have been updated successfully!")
+	if jsonEncodeErr != nil {
+		log.Fatal(jsonEncodeErr)
+	}
+	_, writeErr := w.Write(res)
+	if writeErr != nil {
+		log.Fatal(writeErr)
+	}
 }
 
 // DeleteBook deletes a book (based on the book Id) from the database.
 func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	bookId := vars["bookId"]
-	Id, err1 := strconv.ParseInt(bookId, 0, 0)
+	id, err1 := strconv.ParseInt(bookId, 0, 0)
 	if err1 != nil {
 		fmt.Println("error while parsing")
 	}
 
-	bookDetails := models.DeleteBook(Id)
+	bookDetails := models.DeleteBook(id)
 	_, err := json.Marshal(bookDetails)
 	if err != nil {
 		log.Fatal(err)
@@ -81,5 +129,8 @@ func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	//w.Write(res)
-	json.NewEncoder(w).Encode("Book Deleted Successfully!")
+	jsonEncodeErr := json.NewEncoder(w).Encode("book deleted successfully!")
+	if jsonEncodeErr != nil {
+		log.Fatal(jsonEncodeErr)
+	}
 }
