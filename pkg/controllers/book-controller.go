@@ -172,6 +172,7 @@ func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// bookExists checks if requested book exists in database.
 func bookExists(id string) bool {
 	var book models.Book
 	config.GetDB().First(&book, id)
