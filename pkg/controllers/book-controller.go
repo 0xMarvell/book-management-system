@@ -128,6 +128,7 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 	if jsonEncodeErr != nil {
 		log.Fatal(jsonEncodeErr)
 	}
+
 	_, writeErr := w.Write(res)
 	if writeErr != nil {
 		log.Fatal(writeErr)
@@ -156,7 +157,7 @@ func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	}
 
 	bookDetails := models.DeleteBook(id)
-	_, err := json.Marshal(bookDetails)
+	res, err := json.Marshal(bookDetails)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -166,6 +167,11 @@ func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	jsonEncodeErr := json.NewEncoder(w).Encode("book deleted successfully!")
 	if jsonEncodeErr != nil {
 		log.Fatal(jsonEncodeErr)
+	}
+
+	_, writeErr := w.Write(res)
+	if writeErr != nil {
+		log.Fatal(writeErr)
 	}
 }
 
