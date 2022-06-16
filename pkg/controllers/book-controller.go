@@ -12,7 +12,8 @@ import (
 	"github.com/gorilla/mux"
 )
 
-var NewBook models.Book
+// var NewBook models.Book
+// var db *gorm.DB
 
 // GetBook sends http request to retrieve all books stored in database.
 func GetBook(w http.ResponseWriter, r *http.Request) {
@@ -115,6 +116,7 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	bookId := vars["bookId"]
+
 	id, err1 := strconv.ParseInt(bookId, 0, 0)
 	if err1 != nil {
 		fmt.Println("error while parsing")
@@ -128,7 +130,6 @@ func DeleteBook(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	//w.Write(res)
 	jsonEncodeErr := json.NewEncoder(w).Encode("book deleted successfully!")
 	if jsonEncodeErr != nil {
 		log.Fatal(jsonEncodeErr)

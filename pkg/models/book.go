@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/Marvellous-Chimaraoke/book-management-system/pkg/config"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 var db *gorm.DB
@@ -24,7 +24,7 @@ func init() {
 
 // CreateBook creates a new book object in the database.
 func (b *Book) CreateBook() *Book {
-	db.NewRecord(b)
+	//db.NewRecord(b)
 	db.Create(&b)
 	return b
 }
