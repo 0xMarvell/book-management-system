@@ -13,9 +13,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// var NewBook models.Book
-// var db *gorm.DB
-
 // GetBook sends http request to retrieve all books stored in database.
 func GetBook(w http.ResponseWriter, r *http.Request) {
 	newBooks := models.GetAllBooks()

@@ -7,7 +7,7 @@ import (
 
 	"github.com/Marvellous-Chimaraoke/book-management-system/pkg/routes"
 	"github.com/gorilla/mux"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	_ "gorm.io/driver/mysql"
 )
 
 const PORT = ":8080"
