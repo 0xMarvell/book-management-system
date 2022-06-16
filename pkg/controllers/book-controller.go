@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/Marvellous-Chimaraoke/book-management-system/pkg/config"
 	"github.com/Marvellous-Chimaraoke/book-management-system/pkg/models"
 	"github.com/Marvellous-Chimaraoke/book-management-system/pkg/utils"
 	"github.com/gorilla/mux"
@@ -35,6 +36,18 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 func GetBookById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	bookId := vars["bookId"]
+
+	if bookExists(bookId) == false {
+		w.WriteHeader(http.StatusNotFound)
+
+		jsonEncodeErr := json.NewEncoder(w).Encode("error: book does not exist in database")
+		if jsonEncodeErr != nil {
+			log.Fatal(jsonEncodeErr)
+		}
+
+		return
+	}
+
 	id, err1 := strconv.ParseInt(bookId, 0, 0)
 	if err1 != nil {
 		fmt.Println("error while parsing")
@@ -79,6 +92,18 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 	bookId := vars["bookId"]
+
+	if bookExists(bookId) == false {
+		w.WriteHeader(http.StatusNotFound)
+
+		jsonEncodeErr := json.NewEncoder(w).Encode("error: book does not exist in database")
+		if jsonEncodeErr != nil {
+			log.Fatal(jsonEncodeErr)
+		}
+
+		return
+	}
+
 	id, err1 := strconv.ParseInt(bookId, 0, 0)
 	if err1 != nil {
 		fmt.Println("error while parsing")
@@ -117,6 +142,17 @@ func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	bookId := vars["bookId"]
 
+	if bookExists(bookId) == false {
+		w.WriteHeader(http.StatusNotFound)
+
+		jsonEncodeErr := json.NewEncoder(w).Encode("error: book does not exist in database")
+		if jsonEncodeErr != nil {
+			log.Fatal(jsonEncodeErr)
+		}
+
+		return
+	}
+
 	id, err1 := strconv.ParseInt(bookId, 0, 0)
 	if err1 != nil {
 		fmt.Println("error while parsing")
@@ -133,5 +169,15 @@ func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	jsonEncodeErr := json.NewEncoder(w).Encode("book deleted successfully!")
 	if jsonEncodeErr != nil {
 		log.Fatal(jsonEncodeErr)
+	}
+}
+
+func bookExists(id string) bool {
+	var book models.Book
+	config.GetDB().First(&book, id)
+	if book.ID == 0 {
+		return false
+	} else {
+		return true
 	}
 }
