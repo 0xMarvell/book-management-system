@@ -20,7 +20,7 @@ This project makes use of the [godotenv](github.com/joho/godotenv) package to st
     git clone https://github.com/Marvellous-Chimaraoke/book-management-system.git
     ```
 
-- Make sure to have at least Go version 1.18 installed on your device
+- Make sure to have [Go](https://go.dev/) installed on your local machine.
 - Open the code base directory in terminal
 - Run program:
 
