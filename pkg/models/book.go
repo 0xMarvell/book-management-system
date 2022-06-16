@@ -1,6 +1,8 @@
 package models
 
 import (
+	"log"
+
 	"github.com/Marvellous-Chimaraoke/book-management-system/pkg/config"
 	"gorm.io/gorm"
 )
@@ -19,12 +21,14 @@ type Book struct {
 func init() {
 	config.Connect()
 	db = config.GetDB()
-	db.AutoMigrate(&Book{})
+	err := db.AutoMigrate(&Book{})
+	if err != nil {
+		log.Fatal(err, "error migrating DB")
+	}
 }
 
 // CreateBook creates a new book object in the database.
 func (b *Book) CreateBook() *Book {
-	//db.NewRecord(b)
 	db.Create(&b)
 	return b
 }
