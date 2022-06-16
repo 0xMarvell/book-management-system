@@ -9,7 +9,7 @@ A simple CRUD API for managing books in a bookstore built using:
 
 ## DOCS
 
-Read the documentation [here](https://documenter.getpostman.com/view/15381378/UzBjsTh9).
+Read the documentation [here](https://documenter.getpostman.com/view/15381378/UzBjsTh9){:target="_blank"}.
 
 ## Environment Variables
 
