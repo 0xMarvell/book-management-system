@@ -1,1 +1,1 @@
-web: bin/book-management-system
+web: bin/cmd
