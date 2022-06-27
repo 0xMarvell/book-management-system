@@ -31,8 +31,6 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 	if writeErr != nil {
 		log.Fatal(writeErr)
 	}
-
-	fmt.Println(string(displayMessage))
 }
 
 // GetBook sends http request to retrieve all books stored in database.
@@ -57,12 +55,10 @@ func GetBookById(w http.ResponseWriter, r *http.Request) {
 	bookId := vars["bookId"]
 
 	if bookExists(bookId) == false {
-		w.WriteHeader(http.StatusNotFound)
-
-		jsonEncodeErr := json.NewEncoder(w).Encode("error: book does not exist in database")
-		if jsonEncodeErr != nil {
-			log.Fatal(jsonEncodeErr)
-		}
+		displayErrorMessage(w, map[string]interface{}{
+			"success": false,
+			"message": "book does not exist in database",
+		})
 
 		return
 	}
@@ -113,12 +109,10 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 	bookId := vars["bookId"]
 
 	if bookExists(bookId) == false {
-		w.WriteHeader(http.StatusNotFound)
-
-		jsonEncodeErr := json.NewEncoder(w).Encode("error: book does not exist in database")
-		if jsonEncodeErr != nil {
-			log.Fatal(jsonEncodeErr)
-		}
+		displayErrorMessage(w, map[string]interface{}{
+			"success": false,
+			"message": "book does not exist in database",
+		})
 
 		return
 	}
@@ -163,12 +157,10 @@ func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	bookId := vars["bookId"]
 
 	if bookExists(bookId) == false {
-		w.WriteHeader(http.StatusNotFound)
-
-		jsonEncodeErr := json.NewEncoder(w).Encode("error: book does not exist in database")
-		if jsonEncodeErr != nil {
-			log.Fatal(jsonEncodeErr)
-		}
+		displayErrorMessage(w, map[string]interface{}{
+			"success": false,
+			"message": "book does not exist in database",
+		})
 
 		return
 	}
@@ -205,5 +197,20 @@ func bookExists(id string) bool {
 		return false
 	} else {
 		return true
+	}
+}
+
+// displayErrorMessage displays an error message as json after sending a http request
+func displayErrorMessage(w http.ResponseWriter, data map[string]interface{}) {
+	displayErrorMessage, err := json.MarshalIndent(data, "", "   ")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusNotFound)
+	_, writeErr := w.Write(displayErrorMessage)
+	if writeErr != nil {
+		log.Fatal(writeErr)
 	}
 }
