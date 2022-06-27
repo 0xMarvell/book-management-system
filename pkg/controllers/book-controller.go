@@ -25,6 +25,13 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	_, writeErr := w.Write(displayMessage)
+	if writeErr != nil {
+		log.Fatal(writeErr)
+	}
+
 	fmt.Println(displayMessage)
 }
 
