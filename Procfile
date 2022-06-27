@@ -1,1 +1,1 @@
-web: bms
+web: bin/book-management-system
