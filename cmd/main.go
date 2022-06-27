@@ -23,5 +23,5 @@ func main() {
 	routes.RegisterBookStoreRoutes(r)
 	http.Handle("/", r)
 	fmt.Println("Server is up and running...")
-	log.Fatal(http.ListenAndServe(os.Getenv("PORT"), r))
+	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), r))
 }
