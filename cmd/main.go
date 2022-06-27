@@ -8,7 +8,6 @@ import (
 
 	"github.com/Marvellous-Chimaraoke/book-management-system/pkg/routes"
 	"github.com/gorilla/mux"
-	"github.com/joho/godotenv"
 	_ "gorm.io/driver/mysql"
 )
 
@@ -16,10 +15,10 @@ import (
 func main() {
 	r := mux.NewRouter()
 
-	dotEnvErr := godotenv.Load()
-	if dotEnvErr != nil {
-		log.Fatal("error loading envirionment variables", dotEnvErr)
-	}
+	// dotEnvErr := godotenv.Load()
+	// if dotEnvErr != nil {
+	// 	log.Fatal("error loading envirionment variables")
+	// }
 
 	routes.RegisterBookStoreRoutes(r)
 	http.Handle("/", r)

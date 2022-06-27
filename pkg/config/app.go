@@ -4,10 +4,8 @@ import (
 	// "github.com/jinzhu/gorm"
 	// _ "github.com/jinzhu/gorm/dialects/mysql"
 	"fmt"
-	"log"
 	"os"
 
-	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -17,10 +15,10 @@ var db *gorm.DB
 // Connect makes API to connect with MySQL database
 func Connect() {
 	// Load env vars
-	dotEnvErr := godotenv.Load()
-	if dotEnvErr != nil {
-		log.Fatal("error loading envirionment variables")
-	}
+	// dotEnvErr := godotenv.Load()
+	// if dotEnvErr != nil {
+	// 	log.Fatal("error loading envirionment variables")
+	// }
 
 	dbUsername := os.Getenv("DBUSERNAME")
 	dbPassword := os.Getenv("DBPASSWORD")
