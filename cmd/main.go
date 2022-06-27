@@ -18,7 +18,7 @@ func main() {
 
 	dotEnvErr := godotenv.Load()
 	if dotEnvErr != nil {
-		log.Fatal("error loading envirionment variables")
+		log.Fatal("error loading envirionment variables", dotEnvErr)
 	}
 
 	routes.RegisterBookStoreRoutes(r)
