@@ -1,1 +1,1 @@
-web: book-management-system
+web: bms
