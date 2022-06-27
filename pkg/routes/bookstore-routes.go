@@ -7,6 +7,7 @@ import (
 
 // RegisterBookSToreRoutes handles routing for the API endpoints
 func RegisterBookStoreRoutes(router *mux.Router) {
+	router.HandleFunc("/", controllers.HomePage).Methods("GET")
 	router.HandleFunc("/books", controllers.CreateBook).Methods("POST")
 	router.HandleFunc("/books", controllers.GetBook).Methods("GET")
 

@@ -13,6 +13,21 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// HomePage displays simple message on the home page.
+func HomePage(w http.ResponseWriter, r *http.Request) {
+	data := map[string]interface{}{
+		"success": true,
+		"message": "Hello!, try sending HTTP requests to the endpoints specified in the documentation :)",
+	}
+
+	displayMessage, err := json.MarshalIndent(data, "", "   ")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(displayMessage)
+}
+
 // GetBook sends http request to retrieve all books stored in database.
 func GetBook(w http.ResponseWriter, r *http.Request) {
 	newBooks := models.GetAllBooks()
