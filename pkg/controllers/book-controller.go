@@ -32,7 +32,7 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(writeErr)
 	}
 
-	fmt.Println(displayMessage)
+	fmt.Println(string(displayMessage))
 }
 
 // GetBook sends http request to retrieve all books stored in database.
