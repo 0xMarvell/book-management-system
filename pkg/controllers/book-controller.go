@@ -36,7 +36,7 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 // GetBook sends http request to retrieve all books stored in database.
 func GetBook(w http.ResponseWriter, r *http.Request) {
 	newBooks := models.GetAllBooks()
-	res, err := json.Marshal(newBooks)
+	res, err := json.MarshalIndent(newBooks, "", "    ")
 	if err != nil {
 		log.Fatal(err)
 	}
