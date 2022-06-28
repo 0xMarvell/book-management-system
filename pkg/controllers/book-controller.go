@@ -20,7 +20,7 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 		"message": "Hello!, try sending HTTP requests to the endpoints specified in the documentation :)",
 	}
 
-	displayMessage, err := json.MarshalIndent(data, "", "   ")
+	displayMessage, err := json.MarshalIndent(data, "", "    ")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -54,7 +54,7 @@ func GetBookById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	bookId := vars["bookId"]
 
-	if bookExists(bookId) == false {
+	if !bookExists(bookId) {
 		displayErrorMessage(w, map[string]interface{}{
 			"success": false,
 			"message": "book does not exist in database",
@@ -69,7 +69,7 @@ func GetBookById(w http.ResponseWriter, r *http.Request) {
 	}
 
 	bookDetails, _ := models.GetBookById(id)
-	res, err := json.Marshal(bookDetails)
+	res, err := json.MarshalIndent(bookDetails, "", "    ")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -88,7 +88,7 @@ func CreateBook(w http.ResponseWriter, r *http.Request) {
 	utils.ParseBody(r, book)
 	b := book.CreateBook()
 
-	res, err := json.Marshal(b)
+	res, err := json.MarshalIndent(b, "", "    ")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -108,7 +108,7 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	bookId := vars["bookId"]
 
-	if bookExists(bookId) == false {
+	if !bookExists(bookId) {
 		displayErrorMessage(w, map[string]interface{}{
 			"success": false,
 			"message": "book does not exist in database",
@@ -134,7 +134,7 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 	}
 	db.Save(&bookDetails) // save changes to book object
 
-	res, err := json.Marshal(bookDetails)
+	res, err := json.MarshalIndent(bookDetails, "", "    ")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -156,7 +156,7 @@ func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	bookId := vars["bookId"]
 
-	if bookExists(bookId) == false {
+	if !bookExists(bookId) {
 		displayErrorMessage(w, map[string]interface{}{
 			"success": false,
 			"message": "book does not exist in database",
@@ -171,7 +171,7 @@ func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	}
 
 	bookDetails := models.DeleteBook(id)
-	res, err := json.Marshal(bookDetails)
+	res, err := json.MarshalIndent(bookDetails, "", "    ")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -202,7 +202,7 @@ func bookExists(id string) bool {
 
 // displayErrorMessage displays an error message as json after sending a http request
 func displayErrorMessage(w http.ResponseWriter, data map[string]interface{}) {
-	displayErrorMessage, err := json.MarshalIndent(data, "", "   ")
+	displayErrorMessage, err := json.MarshalIndent(data, "", "    ")
 	if err != nil {
 		log.Fatal(err)
 	}
