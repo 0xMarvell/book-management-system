@@ -7,9 +7,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/Marvellous-Chimaraoke/book-management-system/pkg/config"
-	"github.com/Marvellous-Chimaraoke/book-management-system/pkg/models"
-	"github.com/Marvellous-Chimaraoke/book-management-system/pkg/utils"
+	"github.com/0xMarvell/book-management-system/pkg/config"
+	"github.com/0xMarvell/book-management-system/pkg/models"
+	"github.com/0xMarvell/book-management-system/pkg/utils"
 	"github.com/gorilla/mux"
 )
 

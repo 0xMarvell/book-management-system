@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"github.com/Marvellous-Chimaraoke/book-management-system/pkg/controllers"
+	"github.com/0xMarvell/book-management-system/pkg/controllers"
 	"github.com/gorilla/mux"
 )
 

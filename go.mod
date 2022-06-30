@@ -1,4 +1,4 @@
-module github.com/Marvellous-Chimaraoke/book-management-system
+module github.com/0xMarvell/book-management-system
 
 go 1.18
 

@@ -3,7 +3,7 @@ package models
 import (
 	"log"
 
-	"github.com/Marvellous-Chimaraoke/book-management-system/pkg/config"
+	"github.com/0xMarvell/book-management-system/pkg/config"
 	"gorm.io/gorm"
 )
 

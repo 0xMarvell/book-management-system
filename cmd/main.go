@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/Marvellous-Chimaraoke/book-management-system/pkg/routes"
+	"github.com/0xMarvell/book-management-system/pkg/routes"
 	"github.com/gorilla/mux"
 	_ "gorm.io/driver/mysql"
 )

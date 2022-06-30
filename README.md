@@ -21,7 +21,7 @@ This project makes use of the [godotenv](github.com/joho/godotenv) package to st
 - Clone Repo
 
     ```bash
-    git clone https://github.com/Marvellous-Chimaraoke/book-management-system.git
+    git clone https://github.com/0xMarvell/book-management-system.git
     ```
 
 - Make sure to have [Go](https://go.dev/) installed on your local machine.
