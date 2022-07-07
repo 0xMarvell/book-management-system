@@ -11,13 +11,29 @@ import (
 
 var db *gorm.DB
 
+// const projectDirName = "book-management-system" // change to relevant project name
+
+// func loadEnv() {
+
+// 	/* loadEnv loads data from the .env file using a dynamic path.
+// 	This helps with preventing errors while loading env files
+// 	and makes the process of running tests in different subdirectories smooth.
+// 	*/
+
+// 	projectName := regexp.MustCompile(`^(.*` + projectDirName + `)`)
+// 	currentWorkDirectory, _ := os.Getwd()
+// 	rootPath := projectName.Find([]byte(currentWorkDirectory))
+
+// 	err := godotenv.Load(string(rootPath) + `/.env`)
+
+// 	if err != nil {
+// 		log.Fatalf("Error loading .env file: %v",err)
+// 	}
+// }
+
 // Connect makes API to connect with MySQL database
 func Connect() {
-	//Load env vars
-	// dotEnvErr := godotenv.Load()
-	// if dotEnvErr != nil {
-	// 	log.Fatalf("error loading envirionment variables: %v", dotEnvErr)
-	// }
+	// loadEnv()
 
 	dbUsername := os.Getenv("DBUSERNAME")
 	dbPassword := os.Getenv("DBPASSWORD")
