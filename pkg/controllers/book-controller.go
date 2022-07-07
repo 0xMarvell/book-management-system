@@ -22,14 +22,14 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 
 	displayMessage, err := json.MarshalIndent(data, "", "    ")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("error marshalling JSON: %v", err)
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	_, writeErr := w.Write(displayMessage)
 	if writeErr != nil {
-		log.Fatal(writeErr)
+		log.Fatalf("could not write data: %v", writeErr)
 	}
 }
 
@@ -38,14 +38,14 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 	newBooks := models.GetAllBooks()
 	res, err := json.MarshalIndent(newBooks, "", "    ")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("error marshalling JSON: %v", err)
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	_, writeErr := w.Write(res)
 	if writeErr != nil {
-		log.Fatal(writeErr)
+		log.Fatalf("could not write data: %v", writeErr)
 	}
 }
 
@@ -71,14 +71,14 @@ func GetBookById(w http.ResponseWriter, r *http.Request) {
 	bookDetails, _ := models.GetBookById(id)
 	res, err := json.MarshalIndent(bookDetails, "", "    ")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("error marshalling JSON: %v", err)
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	_, writeErr := w.Write(res)
 	if writeErr != nil {
-		log.Fatal(writeErr)
+		log.Fatalf("could not write data: %v", writeErr)
 	}
 }
 
@@ -90,13 +90,13 @@ func CreateBook(w http.ResponseWriter, r *http.Request) {
 
 	res, err := json.MarshalIndent(b, "", "    ")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("error marshalling JSON: %v", err)
 	}
 
 	w.WriteHeader(http.StatusCreated)
 	_, writeErr := w.Write(res)
 	if writeErr != nil {
-		log.Fatal(writeErr)
+		log.Fatalf("could not write data: %v", writeErr)
 	}
 }
 
@@ -136,18 +136,18 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 
 	res, err := json.MarshalIndent(bookDetails, "", "    ")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("error marshalling JSON: %v", err)
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	jsonEncodeErr := json.NewEncoder(w).Encode("book details have been updated successfully!")
 	if jsonEncodeErr != nil {
-		log.Fatal(jsonEncodeErr)
+		log.Fatalf("error encoding JSON: %v", jsonEncodeErr)
 	}
 
 	_, writeErr := w.Write(res)
 	if writeErr != nil {
-		log.Fatal(writeErr)
+		log.Fatalf("could not write data: %v", writeErr)
 	}
 }
 
@@ -173,19 +173,19 @@ func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	bookDetails := models.DeleteBook(id)
 	res, err := json.MarshalIndent(bookDetails, "", "    ")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("error marshalling JSON: %v", err)
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	jsonEncodeErr := json.NewEncoder(w).Encode("book deleted successfully!")
 	if jsonEncodeErr != nil {
-		log.Fatal(jsonEncodeErr)
+		log.Fatalf("error encoding JSON: %v", jsonEncodeErr)
 	}
 
 	_, writeErr := w.Write(res)
 	if writeErr != nil {
-		log.Fatal(writeErr)
+		log.Fatalf("could not write data: %v", writeErr)
 	}
 }
 
@@ -204,13 +204,13 @@ func bookExists(id string) bool {
 func displayErrorMessage(w http.ResponseWriter, data map[string]interface{}) {
 	displayErrorMessage, err := json.MarshalIndent(data, "", "    ")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("error marshalling JSON: %v", err)
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusNotFound)
 	_, writeErr := w.Write(displayErrorMessage)
 	if writeErr != nil {
-		log.Fatal(writeErr)
+		log.Fatalf("could not write data: %v", writeErr)
 	}
 }
