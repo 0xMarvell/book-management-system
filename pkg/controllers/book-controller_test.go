@@ -21,4 +21,5 @@ func TestHomePage(t *testing.T) {
 	if res.StatusCode != http.StatusOK {
 		t.Fatalf("expected Status OK; got %v", res.StatusCode)
 	}
+
 }
