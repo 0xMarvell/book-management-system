@@ -26,14 +26,7 @@ This project makes use of the [godotenv](github.com/joho/godotenv) package to st
 
 - Make sure to have [Go](https://go.dev/) installed on your local machine.
 - Open the code base directory in terminal
-- In the `config/app.go` file, uncomment line 7 and lines 17 - 20
-
-    ```go
-    // dotEnvErr := godotenv.Load()
-    // if dotEnvErr != nil {
-    //  log.Fatalf("error loading envirionment variables: %v", dotEnvErr))
-    // }
-    ```
+- In the `config/app.go` file, uncomment line 7, lines 14 - 32 and line 36.
 
 - Run program:
 
