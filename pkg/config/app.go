@@ -13,10 +13,10 @@ var db *gorm.DB
 
 // Connect makes API to connect with MySQL database
 func Connect() {
-	// Load env vars
+	//Load env vars
 	// dotEnvErr := godotenv.Load()
 	// if dotEnvErr != nil {
-	// 	log.Fatal("error loading envirionment variables")
+	// 	log.Fatalf("error loading envirionment variables: %v", dotEnvErr)
 	// }
 
 	dbUsername := os.Getenv("DBUSERNAME")
