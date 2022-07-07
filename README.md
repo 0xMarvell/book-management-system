@@ -31,7 +31,7 @@ This project makes use of the [godotenv](github.com/joho/godotenv) package to st
     ```go
     // dotEnvErr := godotenv.Load()
     // if dotEnvErr != nil {
-    //  log.Fatal("error loading envirionment variables")
+    //  log.Fatalf("error loading envirionment variables: %v", dotEnvErr))
     // }
     ```
 
