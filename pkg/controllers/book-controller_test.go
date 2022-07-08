@@ -8,20 +8,24 @@ import (
 )
 
 func TestHomePage(t *testing.T) {
-	request, err := http.NewRequest("GET", "localhost:8080/", nil)
-	if err != nil {
-		t.Fatalf("could not create request: %v", err)
-	}
+	t.Run("load homepage with correct status code", func(t *testing.T) {
+		testHandler := func() http.Handler {
+			r := http.NewServeMux()
+			r.HandleFunc("/", HomePage)
+			return r
+		}
+		srv := httptest.NewServer(testHandler())
+		defer srv.Close()
 
-	recorder := httptest.NewRecorder()
-	HomePage(recorder, request)
+		response, err := http.Get(srv.URL)
+		if err != nil {
+			t.Fatalf("could not send GET request: %v", err)
+		}
 
-	res := recorder.Result()
-	defer res.Body.Close()
-
-	if res.StatusCode != http.StatusOK {
-		t.Fatalf("FAILED: expected Status OK (200); got %v", res.StatusCode)
-	}
+		if response.StatusCode != http.StatusOK {
+			t.Fatalf("FAILED: expected status code %d ; got %d", http.StatusOK, response.StatusCode)
+		}
+	})
 
 }
 
@@ -45,9 +49,9 @@ func TestGetBook(t *testing.T) {
 		endpoint       string
 		httpStatusCode int
 	}{
-		{name: "REQUEST WITH CORRECT ENDPOINT", endpoint: "/books", httpStatusCode: 200},
-		{name: "REQUEST WITH INCORRECT ENDPOINT", endpoint: "/book/1", httpStatusCode: 404},
-		{name: "REQUEST WITH SPELLING ERROR", endpoint: "/boojs", httpStatusCode: 404},
+		{name: "request with correct endpoint", endpoint: "/books", httpStatusCode: 200},
+		{name: "request with incorrect endpoint", endpoint: "/book/1", httpStatusCode: 404},
+		{name: "request with spelling error", endpoint: "/boojs", httpStatusCode: 404},
 	}
 
 	for _, tt := range testcases {
