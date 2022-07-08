@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 
-	// "github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -27,7 +26,7 @@ var db *gorm.DB
 // 	err := godotenv.Load(string(rootPath) + `/.env`)
 
 // 	if err != nil {
-// 		log.Fatalf("Error loading .env file: %v",err)
+// 		log.Fatalf("Error loading .env file: %v", err)
 // 	}
 // }
 
