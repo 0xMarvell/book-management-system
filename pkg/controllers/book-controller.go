@@ -65,7 +65,7 @@ func GetBookById(w http.ResponseWriter, r *http.Request) {
 
 	id, err1 := strconv.ParseInt(bookId, 0, 0)
 	if err1 != nil {
-		fmt.Println("error while parsing")
+		log.Fatalf("error while parsing: %v", err1)
 	}
 
 	bookDetails, _ := models.GetBookById(id)
