@@ -30,19 +30,21 @@ func TestHomePage(t *testing.T) {
 }
 
 func TestGetBook(t *testing.T) {
-	// request, err := http.NewRequest("GET", "localhost:8080/books", nil)
+	// request, err := http.NewRequest("GET", "localhost:8080", nil)
 	// if err != nil {
 	// 	t.Fatalf("could not create request: %v", err)
 	// }
 
 	// recorder := httptest.NewRecorder()
-	// GetBook(recorder, request)
+	// // GetBook(recorder, request)
+	// // handler := http.HandlerFunc(GetBook)
+	// // handler.ServeHTTP(recorder, request)
 
 	// res := recorder.Result()
 	// defer res.Body.Close()
 
 	// if res.StatusCode != http.StatusOK {
-	// 	t.Fatalf("FAILED: expected Status OK (200); got %v", res.StatusCode)
+	// 	t.Fatalf("FAILED: expected status code %d; got %d", http.StatusOK, res.StatusCode)
 	// }
 	testcases := []struct {
 		name           string
@@ -78,41 +80,43 @@ func TestGetBook(t *testing.T) {
 
 }
 
-// func TestGetBookById(t *testing.T) {
-// 	testcases := []struct {
-// 		name           string
-// 		endpoint       string
-// 		httpStatusCode int
-// 		contentLength  int64
-// 	}{
-// 		{name: "book exists in database", endpoint: fmt.Sprintf("/books/%d", 7), httpStatusCode: 200},
-// 		{name: "book does not exist in database", endpoint: "/books/44", httpStatusCode: 404, contentLength: 74},
-// 		{name: "request with spelling error", endpoint: "/book/7", httpStatusCode: 404, contentLength: 74},
-// 	}
+func TestGetBookById(t *testing.T) {
+	testcases := []struct {
+		name           string
+		endpoint       string
+		httpStatusCode int
+		contentLength  int64
+	}{
+		{name: "book exists in database", endpoint: fmt.Sprintf("/books/%d", 7), httpStatusCode: 200},
+		{name: "book does not exist in database", endpoint: "/books/44", httpStatusCode: 404, contentLength: 74},
+		{name: "request with spelling error", endpoint: "/book/7", httpStatusCode: 404, contentLength: 74},
+	}
 
-// 	for _, tc := range testcases {
-// 		t.Run(tc.name, func(t *testing.T) {
-// 			testHandler := func() http.Handler {
-// 				r := http.NewServeMux()
-// 				r.HandleFunc(tc.endpoint, GetBookById)
-// 				return r
-// 			}
+	for _, tc := range testcases {
+		t.Run(tc.name, func(t *testing.T) {
+			testHandler := func() http.Handler {
+				r := http.NewServeMux()
+				r.HandleFunc(tc.endpoint, GetBookById)
+				return r
+			}
 
-// 			srv := httptest.NewServer(testHandler())
-// 			defer srv.Close()
+			srv := httptest.NewServer(testHandler())
+			defer srv.Close()
 
-// 			response, err := http.Get(fmt.Sprintf("%s/books", srv.URL))
-// 			if err != nil {
-// 				t.Fatalf("could not send GET request: %v", err)
-// 			}
-// 			// fmt.Println(response)
-// 			if response.StatusCode != tc.httpStatusCode {
-// 				t.Fatalf("FAILED: expected status code %d; got %d", tc.httpStatusCode, response.StatusCode)
-// 			}
+			response, err := http.Get(fmt.Sprintf("%s/books/7", srv.URL))
+			if err != nil {
+				t.Fatalf("could not send GET request: %v", err)
+			}
+			// vars := mux.Vars(response.Request)
+			//bookId := vars["bookId"]
+			// fmt.Println(response)
+			if response.StatusCode != tc.httpStatusCode {
+				t.Fatalf("FAILED: expected status code %d; got %d", tc.httpStatusCode, response.StatusCode)
+			}
 
-// 			if response.ContentLength != tc.contentLength {
-// 				t.Fatalf("FAILED: expected response with Content-Length %d; got %d", tc.contentLength, response.ContentLength)
-// 			}
-// 		})
-// 	}
-// }
+			if response.ContentLength != tc.contentLength {
+				t.Fatalf("FAILED: expected response with Content-Length %d; got %d", tc.contentLength, response.ContentLength)
+			}
+		})
+	}
+}
