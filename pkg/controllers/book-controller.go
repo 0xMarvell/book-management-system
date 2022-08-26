@@ -31,7 +31,6 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 	if writeErr != nil {
 		log.Fatalf("could not write data: %v", writeErr)
 	}
-	fmt.Fprintf(w, "<p><a href='https://documenter.getpostman.com/view/15381378/UzBjsTh9'>View the documentation here</a></p>")
 }
 
 // GetBook sends http request to retrieve all books stored in database.
