@@ -17,7 +17,7 @@ import (
 func HomePage(w http.ResponseWriter, r *http.Request) {
 	data := map[string]interface{}{
 		"success": true,
-		"message": "Hello!, try sending HTTP requests to the endpoints specified in the <a href='https://documenter.getpostman.com/view/15381378/UzBjsTh9'>documentation</a> :)",
+		"message": "Hello!, try sending HTTP requests to the endpoints specified in the docs :)",
 	}
 
 	displayMessage, err := json.MarshalIndent(data, "", "    ")
@@ -31,6 +31,7 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 	if writeErr != nil {
 		log.Fatalf("could not write data: %v", writeErr)
 	}
+	fmt.Fprintf(w, "<p><a href='https://documenter.getpostman.com/view/15381378/UzBjsTh9'>View the documentation here</a></p>")
 }
 
 // GetBook sends http request to retrieve all books stored in database.
