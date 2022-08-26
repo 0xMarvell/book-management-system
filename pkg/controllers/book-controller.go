@@ -17,7 +17,7 @@ import (
 func HomePage(w http.ResponseWriter, r *http.Request) {
 	data := map[string]interface{}{
 		"success": true,
-		"message": "Hello!, try sending HTTP requests to the endpoints specified in the documentation :)",
+		"message": "Hello!, try sending HTTP requests to the endpoints specified in the <a href='https://documenter.getpostman.com/view/15381378/UzBjsTh9'>documentation</a> :)",
 	}
 
 	displayMessage, err := json.MarshalIndent(data, "", "    ")
